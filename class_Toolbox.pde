@@ -46,24 +46,6 @@ public class Toolbox{
 		return this.arraySum(arr) / arr.length;
 	}
 
-	//color manipulation
-
-	color colorAverage(color[] arr){
-		color average = arr[0];
-		for(int i=0;i<arr.length;i++){
-			average = lerpColor(average,arr[i],.5);
-		}
-		return average;
-	}
-
-	color colorBrightest(color[] arr){
-		color brightest = color(0);
-		for(int i=0;i<arr.length;i++){
-			if(brightness(arr[i]) > brightness(brightest)) brightest = arr[i];
-		}
-		return brightest;
-	}
-
 	//debug
 
 	void err(String str){
@@ -426,27 +408,27 @@ public class Toolbox{
 			"@N%Q&WMgm$0BDRH#8dObUAqhGwKpXk9V6P]Eyun[41ojae2S5YfZx(lI)F3{CtJviT7srz\\Lc/?*!+<;^=\",:_'.-` "};
 			String c = cc[ q<cc.length ? q<0 ? 0 : q : cc.length-1];
 			textSize(fs);
-		
+
 		if(toolbox.scene != null) toolbox.scene.beginHUD();
-			
+
 			loadPixels();
 			noLights();
 			background(10);
 			fill(255);
 			colorMode(HSB);
-			
+
 			for(int y=0; y<height;y+=fs){
 				for(int x=0; x<width;x+=fs){
 					int i = x + y*width;
 					float b = brightness(pixels[i]);
 					if(f) fill(hue(pixels[i]),saturation(pixels[i]),255);
 					int bi = int(map(b,255,0,0,c.length()-1));
-					text(c.charAt(bi),x,y);	
+					text(c.charAt(bi),x,y);
 				}
 			}
 
 			colorMode(RGB);
-			
+
 		if(toolbox.scene != null) toolbox.scene.endHUD();
 	}
 
