@@ -1,4 +1,3 @@
-import nervoussystem.obj.*; //obj
 import controlP5.*; //gui
 
 public class Toolbox{
@@ -12,7 +11,6 @@ public class Toolbox{
 	void init(){}
 
 	void update(){
-		if(obj != null) this.obj.update();
 		if(gui != null) gui.draw();
 	}
 
