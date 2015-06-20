@@ -20,7 +20,6 @@ public class Toolbox{
 			if(gui != null) gui.draw();
 			scene.endHUD();
 		}else if(gui != null) gui.draw();
-		if(ease != null) this.ease.update();
 		if(gif != null) this.gif.update();
 	}
 
@@ -302,86 +301,6 @@ public class Toolbox{
 		}
 	}
 
-  //------------------------------
-
-	// easing
-	Ease ease;
-	void ease(float defaultEasing, boolean... d){ ease = new Ease(this.parent, defaultEasing, (d.length>0) ? d[0] : false); }
-
-	class Ease{
-		PApplet parent;
-		ArrayList<Value> values = new ArrayList<Value>();
-		float defaultEasing;
-		boolean debug;
-
-		Ease(PApplet parent, float defaultEasing, boolean debug){
-			this.parent = parent;
-			this.defaultEasing = defaultEasing;
-			this.debug = debug;
-		}
-
-		void set(String name, float value, float... e){
-			for(int i=0; i<this.values.size();i++){
-				Value v = this.values.get(i);
-				if(v.name == name){
-					v.targetValue = value;
-					v.easing = (e.length>0) ? e[0] : v.easing;
-					if(this.debug) println(name+" : value set to "+value);
-					return;
-				}
-			}
-			this.define(name, value, (e.length>0) ? e[0] : this.defaultEasing);
-		}
-
-		boolean setEasing(String name, float easing){
-			for(int i=0; i<this.values.size();i++){
-				Value v = this.values.get(i);
-				if(v.name == name){
-					if(this.debug) println(name+" : easing set to "+easing+" (previous = "+v.easing+")");
-					v.easing = easing;
-					return true;
-				}
-			}
-			if(this.debug) println(name+" not defined");
-			return false;
-		}
-
-		void define(String name, float value, float easing){
-			if(this.debug) println(name+" not defined :\nnew "+name+" set to "+value+" with "+easing+" easing");
-			values.add( new Value(name, value, easing) );
-		}
-
-		float get(String name){
-			float rtrn = 0.0;
-			for(int i=0; i<this.values.size();i++){
-				Value v = this.values.get(i);
-				if(v.name == name) rtrn = v.value;
-			}
-			return rtrn;
-		}
-
-		void update(){ for(int i=0; i<this.values.size();i++) this.values.get(i).update(); }
-
-		class Value{
-			String name;
-			float
-				value = 0,
-				targetValue,
-				easing;
-
-			Value(String name, float value, float easing){
-				this.name = name;
-				this.targetValue = value;
-				this.easing = easing;
-			}
-
-			void update(){
-				float d = this.targetValue - this.value;
-				if(abs(d)>1) this.value += d * easing;
-			}
-		}
-
-	}
 
   //------------------------------
 
