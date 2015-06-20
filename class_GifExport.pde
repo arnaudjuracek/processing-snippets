@@ -2,14 +2,14 @@
  * class for easy access to the gifAnimation lib (.gif recording)
  *
  * usage :
- * new Gif(PApplet parent, String filename, int quality, int repeat, int duration);
+ * new GifExport(PApplet parent, String filename, int quality, int repeat, int duration);
  *
- * call Gif.update(); at the end of the draw() to update all the recording.
+ * call GifExport.update(); at the end of the draw() to update all the recording.
  */
 
 import gifAnimation.*;
 
-class Gif{
+class GifExport{
 	PApplet parent;
 	GifMaker gifMaker;
 	String filename;
@@ -17,7 +17,7 @@ class Gif{
 	int duration;
 	boolean started = false;
 
-	Gif(PApplet parent, String filename, int quality, int repeat, int duration){
+	GifExport(PApplet parent, String filename, int quality, int repeat, int duration){
 		this.parent = parent;
 		this.filename = filename;
 		this.duration = int(duration * frameRate);
@@ -28,15 +28,15 @@ class Gif{
 	void update(){
 		if(this.frameStart == 0){
 			this.frameStart = frameCount;
-			println("Gif started ------------- " + frameCount);
+			println("GifExport started ------------- " + frameCount);
 		}
 
 		this.gifMaker.addFrame();
-		println("Gif writing : "+ (frameCount - this.frameStart) + "/" + duration);
+		println("GifExport writing : "+ (frameCount - this.frameStart) + "/" + duration);
 
 		if(frameCount-this.frameStart >= duration){
 			this.gifMaker.finish();
-			println("Gif finished ------------- " + frameCount);
+			println("GifExport finished ------------- " + frameCount);
 			println("gif_export/"+this.filename+".gif");
 			exit();
 		}
