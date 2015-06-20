@@ -1,12 +1,17 @@
 import themidibus.*;
+/* IN CASE OF BUG, CHECK IF LED IS SET TO EXTERNAL MODE IN THE KORG EDITOR*/
+
 void controllerChange(int channel, int number, int value){
-	korg.keyPressed = true;
-	korg.set(number, value);
+	KORG.triggered = true;
+	KORG.keyPressed = true;
+	KORG.set(number, value);
 }
 
 public class Korg{
 	MidiBus bus;
 	PApplet parent;
+
+	boolean triggered = false;
 
 	private final int
 		PREVIOUS = 58,
@@ -46,7 +51,23 @@ public class Korg{
 		this.helloWorld();
 	}
 
-	void update(){ this.keyPressed = false; }
+	int led_alive_index = 0;
+	void update(){
+		this.keyPressed = false;
+
+		if(frameCount%2==0) led_alive_index = led_alive_index < 7 ? led_alive_index+1 : 0;
+		for(int i=0; i<8; i++){
+			if(i!=led_alive_index){
+				this.led(this.S[i], false);
+				this.led(this.M[i], false);
+				this.led(this.R[i], false);
+			}
+		}
+		this.led(this.S[led_alive_index], true);
+		this.led(this.M[led_alive_index], true);
+		this.led(this.R[led_alive_index], true);
+
+	}
 
 	void set(int keyCode, float v){
 		if(this.debug) println(keyCode + " : " + v);
@@ -70,7 +91,7 @@ public class Korg{
 			case REC : this.keys[REC] = (v!=0); break;
 		}
 
-		// this.led(keyCode, true);
+		this.led(keyCode, true);
 	}
 
 	void led(int keyCode, boolean state){
@@ -89,33 +110,19 @@ public class Korg{
 	}
 
 	void helloWorld(){
-		for(int k=0; k<3; k++){
-			for(int i=0; i<8; i++){
-				this.lights(false);
-				this.led(S[i], true);
-				this.led(M[i], true);
-				this.led(R[i], true);
-				delay(50);
-			}
-			for(int i=6; i>0; i--){
-				this.lights(false);
-				this.led(S[i], true);
-				this.led(M[i], true);
-				this.led(R[i], true);
-				delay(50);
-			}
-		}
-		this.lights(false);
-		this.led(S[0], true);
-		this.led(M[0], true);
-		this.led(R[0], true);
-		delay(50);
-		this.blink(3, 200);
-		this.blink(1, 1000);
+		this.blink(5, 100);
 	}
 
 	boolean keyPressed(int keyCode){ return this.keyPressed ? this.keys[keyCode] : false; }
 
+	private void prepareExitHandler(){
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+		public void run(){
+			System.out.println("Closing KORG...");
+   			KORG.bus.stop();
+		}
+		}));
+	}
 }
 
 void delay(float time) {
