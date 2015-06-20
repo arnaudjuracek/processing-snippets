@@ -190,35 +190,6 @@ public class Toolbox{
 
 	  }
 
-  //------------------------------
-
-	// OBJ export
-
-	void obj(String filename, boolean useColor){ this.obj = new Obj(filename, useColor); }
-
-	Obj obj;
-	class Obj{
-		// OBJExport obj;
-		String filename;
-		boolean record = false;
-
-		Obj(String filename, boolean useColor){
-			beginRecord("nervoussystem.obj.OBJExport","obj_export/"+filename+".obj");
-			this.filename = filename;
-			this.record = true;
-			println("Obj started ------------- " + frameCount);
-		}
-
-		void update(){
-			if(this.record){
-				endRecord();
-				this.record = false;
-				println("Obj finished ------------- " + frameCount);
-				println("obj_export/"+this.filename+".obj");
-			}
-		}
-	}
-
 
   //------------------------------
 
