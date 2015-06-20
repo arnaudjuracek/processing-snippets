@@ -1,4 +1,3 @@
-import peasy.*; //scene
 import gifAnimation.*; //gif
 import nervoussystem.obj.*; //obj
 import controlP5.*; //gui
@@ -15,11 +14,7 @@ public class Toolbox{
 
 	void update(){
 		if(obj != null) this.obj.update();
-		if(scene!= null){
-			scene.beginHUD();
-			if(gui != null) gui.draw();
-			scene.endHUD();
-		}else if(gui != null) gui.draw();
+		if(gui != null) gui.draw();
 		if(gif != null) this.gif.update();
 	}
 
@@ -38,40 +33,6 @@ public class Toolbox{
 	void err(String str){
 		println(str);
 		exit();
-	}
-
-	//------------------------------
-
-	// Allow drag'n'drop rotation/zoom/move on 3D scenes
-
-	void scene(int x, int y, int z, int distance){
-		if(scene==null) scene = new Scene(this.parent,x,y,z,distance);
-		else scene.set(this.parent,x,y,z,distance);
-	}
-
-	Scene scene;
-	class Scene{
-		PApplet parent;
-		PeasyCam cam;
-
-		Scene(PApplet parent, int x, int y, int z, int distance){
-			this.set(parent, x, y, z, distance);
-			cam.setRightDragHandler(cam.getPanDragHandler());
-		}
-
-		void set(PApplet parent, int x, int y, int z, int distance){
-			this.cam = new PeasyCam(parent,x,y,z,distance);
-		}
-
-		void beginHUD(){
-			hint(DISABLE_DEPTH_TEST);
-			cam.beginHUD();
-		}
-
-		void endHUD(){
-			cam.endHUD();
-			hint(ENABLE_DEPTH_TEST);
-		}
 	}
 
 	//------------------------------
@@ -316,7 +277,6 @@ public class Toolbox{
 			String c = cc[ q<cc.length ? q<0 ? 0 : q : cc.length-1];
 			textSize(fs);
 
-		if(toolbox.scene != null) toolbox.scene.beginHUD();
 
 			loadPixels();
 			noLights();
@@ -336,7 +296,6 @@ public class Toolbox{
 
 			colorMode(RGB);
 
-		if(toolbox.scene != null) toolbox.scene.endHUD();
 	}
 
   //------------------------------
