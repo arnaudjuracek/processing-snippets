@@ -11,7 +11,7 @@
  * call Ease.update(); at the beginning of the draw() to update all the easings.
  */
 
-class Ease{
+public class Ease{
 	ArrayList<Value> values = new ArrayList<Value>();
 	float defaultEasing;
 	boolean DEBUG;
@@ -60,7 +60,7 @@ class Ease{
 		}
 
 	// CORE -----------
-		void _define(String name, float value, float easing){
+		private void _define(String name, float value, float easing){
 			if(this.DEBUG) println(name+" not defined :\nnew "+name+" set to "+value+" with "+easing+" easing");
 			values.add( new Value(name, value, easing) );
 		}
