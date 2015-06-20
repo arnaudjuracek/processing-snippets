@@ -1,3 +1,3 @@
-##Processing snippets
+#Processing snippets
 
-#A collection of various functions and classes for Processing
+##A collection of various functions and classes for Processing
