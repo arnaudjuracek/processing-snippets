@@ -1,4 +1,5 @@
-void delay(float time) {
+// pause the program for a duration (ms)
+void delay(float duration){
 	float current = millis();
-	while (millis () < current+time) Thread.yield();
+	while(millis() < current+duration) Thread.yield();
 }
