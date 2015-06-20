@@ -1,24 +1,23 @@
 /* USAGE :
- * call FULLSCREEN(monitor, [renderer])
+ * call FULLSCREEN(monitor_index, renderer)
  * instead of
- * size(width, height, [renderer]);
+ * size(width, height, renderer);
+ *
+ * Due to limitations with the default renderer,
+ * fullscreen() cannot be called without specifying
+ * a renderer (OPENGL, P3D, P2D)
  */
 
-import java.awt.Rectangle;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-Rectangle monitor = new Rectangle();
-
-public void fullscreen(int monitor, String... renderer){
+public void fullscreen(int monitor_index, String renderer){
 	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	GraphicsDevice[] gs = ge.getScreenDevices();
-	GraphicsDevice gd = gs[monitor];
+	GraphicsDevice gd = gs[monitor_index];
 	GraphicsConfiguration[] gc = gd.getConfigurations();
-	monitor = gc[0].getBounds();
+	Rectangle monitor = gc[0].getBounds();
 
-	if(renderer.length>0) size(monitor.width, monitor.height, renderer[0]);
-	else size(monitor.width, monitor.height);
+	size(monitor.width, monitor.height, renderer);
 	frame.setLocation(monitor.x, monitor.y);
 	// frame.setAlwaysOnTop(true);
 }
