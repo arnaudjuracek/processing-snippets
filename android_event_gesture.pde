@@ -1,5 +1,5 @@
 /*
- * class for handling gestures on Android tactile systems
+ * functions for handling gestures on Android tactile systems
  *
  * usage :
  * KetaiGesture GESTURE;
